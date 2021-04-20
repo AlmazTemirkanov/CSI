@@ -123,4 +123,15 @@ public interface TaskRepo extends JpaRepository<Task, String> {
             "GROUP BY re.team, re.team_manager order by round desc", nativeQuery = true)
     List<Object> getAllCsiStartAndEndDays (@Param ("start") LocalDate start,
                                            @Param("end") LocalDate end);
+
+
+    // CSI all CC start and end date
+    @Query(value = "select round(AVG (re.q3_meaning),1), count(re.q3_meaning), re.agent_id, re.agent, re.team, re.team_manager " +
+            "from survey.common_report re " +
+            "where survey_type IN ('I_SOLVE_CONTACT_CENTER')" +
+            "AND q3_meaning != '-1' and re.survey_deliver_date between :start and :end " +
+            "GROUP BY re.team, re.agent_id, re.team_manager, re.agent order by round desc, count desc", nativeQuery = true)
+    List<Object> getAllCsiCC (@Param ("start") LocalDate start,
+                              @Param("end") LocalDate end);
+
 }

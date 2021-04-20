@@ -137,4 +137,16 @@ public class MainController {
         return taskRepo.getAllCsiStartAndEndDays(start,end);
     }
 
+    // Teams CSI for CC for Start and End Date
+    @CrossOrigin
+    @GetMapping("api/v1/cc/{start}/{end}")
+    public List<Object> getAllCsiCC (
+                                        @PathVariable (value = "start")
+                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                        @PathVariable (value = "end")
+                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+
+        return taskRepo.getAllCsiCC(start,end);
+    }
+
 }
