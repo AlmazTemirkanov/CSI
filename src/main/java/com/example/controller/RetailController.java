@@ -37,4 +37,27 @@ public class RetailController {
 
         return smsSurveyRepo.getAllRetail(start, end);
     }
+
+    @CrossOrigin
+    @GetMapping("api/v2/retail/bro/{start}/{end}")
+    public List<Object> getRetailBro (
+            @PathVariable(value = "start")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @PathVariable (value = "end")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+
+        return smsSurveyRepo.getRetailBro(start, end);
+    }
+
+    @CrossOrigin
+    @GetMapping("api/v2/retail/{username}/{start}/{end}")
+    public List<Object> getRetailOne (
+            @PathVariable String username,
+            @PathVariable(value = "start")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+            @PathVariable (value = "end")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+
+        return smsSurveyRepo.getRetailOne(username,start, end);
+    }
 }

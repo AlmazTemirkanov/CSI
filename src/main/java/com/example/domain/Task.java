@@ -45,8 +45,8 @@ public class Task {
     private String questionnaire;
 
   //  @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private String status;
+//    @Column(name = "status")
+//    private String status;
 
    // @Enumerated(EnumType.STRING)
     @Column(name = "survey_type")

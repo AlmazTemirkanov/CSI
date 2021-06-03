@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -117,7 +116,8 @@ public class MainController {
 
     @CrossOrigin
     @GetMapping("api/v1/{team}/{start}/{end}")
-    public List<Object> getTeamNameForAllDays (@PathVariable String team, @PathVariable (value = "start")
+    public List<Object> getTeamNameForAllDays (@PathVariable String team,
+                                               @PathVariable (value = "start")
                                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                                @PathVariable (value = "end")
                                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){

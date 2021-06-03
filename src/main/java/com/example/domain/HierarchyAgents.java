@@ -41,9 +41,9 @@ public class HierarchyAgents {
     @Column(name = "skill_global", length = 3)
     private String skillGlobal;
 
-    @NotNull
-    @Column(name = "support_line", length = 20)
-    private Integer supportLine;
+//    @NotNull
+//    @Column(name = "support_line", length = 20)
+//    private Integer supportLine;
 
     @Column(name = "team_id", updatable = false, insertable = false)
     private Long teamId;
