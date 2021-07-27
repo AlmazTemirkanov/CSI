@@ -37,6 +37,13 @@ public interface TaskRepo extends JpaRepository<Task, String> {
     List<Object> getAgentId30Days (@Param("agentId") String agentId);
 
 
+    @Query(value = "select t.subscriber, s.response, to_char(s.response_date, 'dd-mon hh24:mm'), ag.full_name, t.agent_id, agt.name " +
+            "from survey.task t, survey.sms_survey s, survey.hierarchy_agents ag, survey.hierarchy_teams agt  " +
+            "where t.id=s.task_id and s.position=3 and ag.team_id=agt.id and t.agent_id=ag.agent_id " +
+            "and t.agent_id=:agentId and s.response_date between :start and :end order by s.response_date desc ", nativeQuery = true)
+    List<Object> getAgentIdDays (@Param("agentId") String agentId, @Param ("start") LocalDate start,
+                                 @Param("end") LocalDate end);
+
 
     // All group CSI for 7 days
 

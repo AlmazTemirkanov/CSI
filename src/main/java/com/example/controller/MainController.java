@@ -106,6 +106,17 @@ public class MainController {
     }
 
     @CrossOrigin
+    @GetMapping("api/v1/all/{agentId}/{start}/{end}")
+    public List<Object> getAgentIdDays (@PathVariable String agentId,
+                                        @PathVariable (value = "start")
+                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                        @PathVariable (value = "end")
+                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+
+        return taskRepo.getAgentIdDays (agentId, start, end);
+    }
+
+    @CrossOrigin
     @GetMapping("api/v1/1team/{team}")
     public List<Object> getTeamNameFor1Days (@PathVariable String team) {
 
