@@ -160,4 +160,14 @@ public class MainController {
         return taskRepo.getAllCsiCC(start,end);
     }
 
+    @CrossOrigin
+    @GetMapping("api/v1/nps/{start}/{end}")
+    public List<Object> getCsiAndFcr (@PathVariable (value = "start")
+                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                      @PathVariable (value = "end")
+                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+
+        return taskRepo.getCsiAndFcr(start,end);
+    }
+
 }

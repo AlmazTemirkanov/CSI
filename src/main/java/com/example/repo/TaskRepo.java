@@ -123,7 +123,23 @@ public interface TaskRepo extends JpaRepository<Task, String> {
 
     // All group CSI start and end date
 
-    @Query(value = "select round(AVG (re.q3_meaning),1), count(re.q3_meaning), re.team, re.team_manager     " +
+    @Query(value = "select round(AVG (re.q3_meaning),1), count(re.q3_meaning), re.team, re.team_manager, " +
+            "(select ROUND (cast ((COUNT(re.q4_meaning) - (SELECT COUNT(re.q4_meaning)    \n" +
+            "FROM survey.common_report re  \n" +
+            "WHERE survey_deliver_date BETWEEN :start AND :end \n" +
+            " \n" +
+            "and survey_type IN ('I_SOLVE_CONTACT_CENTER') \n" +
+            "AND q4_meaning in ('0','1','2','3','4','5','6'))) as dec) / (SELECT cast (COUNT(re.q4_meaning) as dec ) / 100 \n" +
+            "FROM survey.common_report re  \n" +
+            "  \n" +
+            "WHERE survey_deliver_date BETWEEN :start AND :end \n" +
+            "and survey_type IN ('I_SOLVE_CONTACT_CENTER') \n" +
+            "AND q4_meaning !='-1'),2) as nps  \n" +
+            " \n" +
+            "FROM survey.common_report re  \n" +
+            "WHERE survey_deliver_date BETWEEN :start AND :end \n" +
+            "and survey_type IN ('I_SOLVE_CONTACT_CENTER') \n" +
+            "AND q4_meaning in ('9','10'))     " +
             "from survey.common_report re " +
             "where survey_type IN ('I_SOLVE_CONTACT_CENTER')" +
             "AND q3_meaning != '-1' and re.survey_deliver_date between :start and :end " +
@@ -140,5 +156,25 @@ public interface TaskRepo extends JpaRepository<Task, String> {
             "GROUP BY re.team, re.agent_id, re.team_manager, re.agent order by round desc, count desc", nativeQuery = true)
     List<Object> getAllCsiCC (@Param ("start") LocalDate start,
                               @Param("end") LocalDate end);
+
+    @Query(value = "select ROUND (AVG (re.q3_meaning), 2) " +
+            "FROM survey.common_report re " +
+            "WHERE survey_deliver_date BETWEEN :start AND :end " +
+            "and survey_type IN ('I_SOLVE_CONTACT_CENTER') " +
+            "AND q3_meaning != '-1' union " +
+            "select ROUND (cast ((COUNT(re.q4_meaning) - (SELECT COUNT(re.q4_meaning) " +
+            "FROM survey.common_report re " +
+            "WHERE survey_deliver_date BETWEEN :start AND :end and survey_type IN ('I_SOLVE_CONTACT_CENTER')" +
+            "AND q4_meaning in ('0','1','2','3','4','5','6'))) as dec) / (SELECT cast (COUNT(re.q4_meaning) as dec / 100 " +
+            "FROM survey.common_report re " +
+            "WHERE survey_deliver_date BETWEEN :start AND :end " +
+            "and survey_type IN ('I_SOLVE_CONTACT_CENTER') " +
+            "AND q4_meaning !='-1'),2) as nps " +
+            "FROM survey.common_report re " +
+            "WHERE survey_deliver_date BETWEEN :start AND :end " +
+            "and survey_type IN ('I_SOLVE_CONTACT_CENTER') " +
+            "AND q4_meaning in ('9','10')", nativeQuery = true)
+    List<Object> getCsiAndFcr (@Param ("start") LocalDate start,
+                               @Param("end") LocalDate end);
 
 }
