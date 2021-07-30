@@ -2,6 +2,10 @@ package com.example.controller;
 
 import com.example.repo.SmsSurveyRepo;
 import com.example.repo.TaskRepo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 //@Controller
+
  @RestController
 @AllArgsConstructor
 public class MainController {
@@ -105,6 +110,13 @@ public class MainController {
         return taskRepo.getTeamNameFor7Days(team);
     }
 
+
+    @ApiOperation(value = "Get list all csi information", response = Iterable.class, tags ="get all CSI")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success, super success"),
+            @ApiResponse(code = 401, message = "not authorized"),
+            @ApiResponse(code = 404, message = "not found")
+    })
     @CrossOrigin
     @GetMapping("api/v1/all/{agentId}/{start}/{end}")
     public List<Object> getAgentIdDays (@PathVariable String agentId,
@@ -137,7 +149,7 @@ public class MainController {
     }
 
     // Teams CSI for Teams for Start and End Date
-    @CrossOrigin
+
     @GetMapping("api/v1/csi/{start}/{end}")
     public List<Object> getAllCsiStartAndEndDays (
                                                   @PathVariable (value = "start")
