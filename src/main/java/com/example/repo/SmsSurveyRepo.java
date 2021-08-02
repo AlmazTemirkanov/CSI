@@ -11,7 +11,7 @@ import java.util.List;
 public interface SmsSurveyRepo extends JpaRepository<SmsSurvey,String> {
 
     @Query(value = "select u.username, round (AVG (re.q3_meaning),1), COUNT(re.q3_meaning), up.division_name, up.position_manager_name " +
-            "from common_report re, task t, retail_hierarchy_users u, retail_hierarchy_positions up " +
+            "from survey.common_report re, survey.task t, survey.retail_hierarchy_users u, survey.retail_hierarchy_positions up " +
             "where re.survey_type IN ('I_JOIN_I_SOLVE_RETAIL')" +
             "AND q3_meaning != '-1' " +
             "AND t.id=re.task_id AND t.agent_id=u.username " +
@@ -24,7 +24,7 @@ public interface SmsSurveyRepo extends JpaRepository<SmsSurvey,String> {
 
 
     @Query(value = "SELECT ROUND (AVG (re.q3_meaning),1), COUNT(re.q3_meaning), up.division_name, up.position_manager_name " +
-            "from common_report re, task t, retail_hierarchy_users u, retail_hierarchy_positions up " +
+            "from survey.common_report re, survey.task t, survey.retail_hierarchy_users u, survey.retail_hierarchy_positions up " +
             "where re.survey_type IN ('I_JOIN_I_SOLVE_RETAIL')" +
             "AND q3_meaning != '-1' " +
             "AND t.id=re.task_id AND t.agent_id=u.username " +
@@ -37,7 +37,7 @@ public interface SmsSurveyRepo extends JpaRepository<SmsSurvey,String> {
 
 
     @Query(value = "SELECT ROUND (AVG (re.q3_meaning),1), COUNT(re.q3_meaning), up.position_manager_name, up.region_name " +
-            "from common_report re, task t, retail_hierarchy_users u, retail_hierarchy_positions up " +
+            "from survey.common_report re, survey.task t, survey.retail_hierarchy_users u, survey.retail_hierarchy_positions up " +
             "where re.survey_type IN ('I_JOIN_I_SOLVE_RETAIL')" +
             "AND q3_meaning != '-1' " +
             "AND t.id=re.task_id " +
@@ -51,7 +51,7 @@ public interface SmsSurveyRepo extends JpaRepository<SmsSurvey,String> {
 
 
     @Query(value = "SELECT adt.subscriber,  TO_CHAR( aas.created_at, 'dd-mon hh24:mm:ss'), aas.response,  u.username, up.division_name, up.position_manager_name, up.region_name " +
-            "FROM  task adt, sms_survey aas, retail_hierarchy_users u,retail_hierarchy_positions up " +
+            "FROM  survey.task adt, survey.sms_survey aas, survey.retail_hierarchy_users u,survey.retail_hierarchy_positions up " +
             "where adt.survey_type IN ('I_JOIN_I_SOLVE_RETAIL')" +
             "AND aas.response IS not NULL " +
             "AND aas.position IN ('3','5') " +

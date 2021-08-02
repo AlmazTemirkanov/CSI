@@ -2,7 +2,6 @@ package com.example.controller;
 
 import com.example.repo.SmsSurveyRepo;
 import com.example.repo.TaskRepo;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -149,7 +148,7 @@ public class MainController {
     }
 
     // Teams CSI for Teams for Start and End Date
-
+    @CrossOrigin
     @GetMapping("api/v1/csi/{start}/{end}")
     public List<Object> getAllCsiStartAndEndDays (
                                                   @PathVariable (value = "start")

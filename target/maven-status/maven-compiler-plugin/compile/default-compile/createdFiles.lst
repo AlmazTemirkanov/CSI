@@ -1,3 +1,4 @@
+com\example\swagger\SwaggerConfig.class
 com\example\domain\HierarchyAgents$HierarchyAgentsBuilder.class
 com\example\Application.class
 com\example\domain\CommonReport$CommonReportBuilder.class
